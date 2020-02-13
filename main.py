@@ -1,30 +1,29 @@
 import sys
 
 
-clientes = 'pablo,ricardo,'
+clientes = ['pablo', 'ricardo']
 
 
 def crear_cliente(nombre_cliente):
 	global clientes
 	
 	if nombre_cliente not in clientes:
-		clientes += nombre_cliente
-		_add_coma()
+		clientes.append(nombre_cliente)
 	else:
 		print('El cliente ya se encuentra en la  BD ')
 
 
 def lista_clientes():
-	global clientes
-
-	print(clientes)
+	for idx, cliente in enumerate(clientes):
+		print('{}: {}'.format(idx, cliente))
 
 
 def actualizar_cliente(nombre_cliente, actualizar_nombre):
 	global clientes
 
 	if nombre_cliente in clientes:
-		clientes = clientes.replace(nombre_cliente + ',', actualizar_nombre + ',')
+		index = clientes.index(nombre_cliente)
+		clientes[index] = actualizar_nombre
 	else:
 		print('El cliente no se encuentra en BD...')
 
@@ -33,25 +32,17 @@ def borrar_cliente(nombre_cliente):
 	global clientes
 
 	if nombre_cliente in clientes:
-		clientes = clientes.replace(nombre_cliente + ',', '')
+		clientes.remove(nombre_cliente)
 	else:
 		print('El cliente no se encunetra en BD')
 
 
 def buscar_cliente(nombre_cliente):
-	lista_clientes = clientes.split(',')
-
-	for cliente in lista_clientes:
+	for cliente in clientes:
 		if cliente != nombre_cliente:
 			continue
 		else:
 			return True
-
-
-def _add_coma():
-	global clientes
-
-	clientes += ','
 
 
 def _get_nombre_cliente():
