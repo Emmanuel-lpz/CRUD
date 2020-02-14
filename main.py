@@ -6,13 +6,14 @@ clientes = [
 	'nombre': 'Pablo',
 	'company': 'Google',
 	'email': 'pablo@google.com',
-	'posicion': 'Sofware Engineer'
+	'posicion': 'Sofware Engineer',
 },
+
 {
 	'nombre': 'Ricardo',
 	'company': 'Facebook',
 	'email': 'rochard@google.com',
-	'posicion': 'Sr. Sofware Engineer'
+	'posicion': 'Sr. Sofware Engineer',
 }
 ]
 
