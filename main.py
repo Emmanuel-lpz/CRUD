@@ -1,7 +1,20 @@
 import sys
 
 
-clientes = ['pablo', 'ricardo']
+clientes = [
+{
+	'nombre': 'Pablo',
+	'company': 'Google',
+	'email': 'pablo@google.com',
+	'posicion': 'Sofware Engineer'
+},
+{
+	'nombre': 'Ricardo',
+	'company': 'Facebook',
+	'email': 'rochard@google.com',
+	'posicion': 'Sr. Sofware Engineer'
+}
+]
 
 
 def crear_cliente(nombre_cliente):
@@ -14,51 +27,62 @@ def crear_cliente(nombre_cliente):
 
 
 def lista_clientes():
+	print('uid | nombre | company | email | posicion')
+	print('|' * 75)
+
 	for idx, cliente in enumerate(clientes):
-		print('{}: {}'.format(idx, cliente))
+		print('{uid} | {nombre} | {company} | {email} | {posicion}'.format(
+			uid=idx,
+			nombre=cliente['nombre'],
+			company=cliente['company'],
+			email=cliente['email'],
+			posicion=cliente['posicion']))
 
 
-def actualizar_cliente(nombre_cliente, actualizar_nombre):
+def actualizar_cliente(cliente_id, actualizar_cliente):
 	global clientes
 
-	if nombre_cliente in clientes:
-		index = clientes.index(nombre_cliente)
-		clientes[index] = actualizar_nombre
+	if len(clientes) - 1 >= cliente_id:
+		clientes[cliente_id] = actualizar_cliente
 	else:
 		print('El cliente no se encuentra en BD...')
 
 
-def borrar_cliente(nombre_cliente):
+def borrar_cliente(cliente_id):
 	global clientes
 
-	if nombre_cliente in clientes:
-		clientes.remove(nombre_cliente)
-	else:
-		print('El cliente no se encunetra en BD')
+	for idx, cliente in enumerate(clientes):
+		if idx == cliente_id:
+			del clientes[idx]
+			break
 
 
 def buscar_cliente(nombre_cliente):
 	for cliente in clientes:
-		if cliente != nombre_cliente:
+		if cliente['nombre'] != nombre_cliente:
 			continue
 		else:
 			return True
 
 
-def _get_nombre_cliente():
-	nombre_cliente = None
+def _get_nombre_cliente_field(field_nombre, mensaje='Cual es el cliente {} ? '):
+	field= None
 
-	while not nombre_cliente:
-		nombre_cliente = input('Cual es el nombre del cliente? ')
+	while not field:
+		field = input(mensaje.format(field_nombre))
 
-		if nombre_cliente == 'exit':
-			nombre_cliente = None
-			break
+	return field
 
-	if not nombre_cliente:
-		sys.exit()
 
-	return nombre_cliente
+def _get_cliente_from_user():
+	cliente = {
+	'nombre': _get_nombre_cliente_field('nombre'),
+	'company': _get_nombre_cliente_field('company'),
+	'email': _get_nombre_cliente_field('email'),
+	'posicion': _get_nombre_cliente_field('posicion')
+	}
+
+	return cliente
 
 
 
@@ -82,33 +106,35 @@ if __name__ == '__main__':
 	comando = comando.upper()
 
 	if comando == 'C':
-		nombre_cliente = _get_nombre_cliente()
-		crear_cliente(nombre_cliente)
+		cliente =_get_cliente_from_user()
+
+		crear_cliente(cliente)
 		lista_clientes()
 	
 	elif comando == 'L':
 		lista_clientes()
 	
 	elif comando == 'A':
-		nombre_cliente = _get_nombre_cliente()
-		actualizar_nombre = input('Cual es el nuevo nombre del cliente? ')
+		cliente_id = int(_get_nombre_cliente_field('id'))
+		actualizar_cliente = _get_cliente_from_user()
 
-		actualizar_cliente(nombre_cliente, actualizar_nombre)
+		actualizar_cliente(cliente_id, actualizar_cliente)
 		lista_clientes()
 
 	elif comando == 'E':
-		nombre_cliente = _get_nombre_cliente()
-		borrar_cliente(nombre_cliente)
+		cliente_id = int(_get_nombre_cliente_field('id'))
+
+		borrar_cliente(cliente_id)
 		lista_clientes()
 
 	elif comando == 'B':
-		nombre_cliente = _get_nombre_cliente()
+		nombre_cliente = _get_nombre_cliente_field('nombre')
 		found = buscar_cliente(nombre_cliente)
 
 		if found:
-			print('El cliente: {} se encunetra en BD'.format(nombre_cliente))
+			print('El cliente: {} SI encunetra en BD'.format(nombre_cliente))
 		else:
-			print('El cliente: {} no se encunetra en BD'.format(nombre_cliente))
+			print('El cliente: {} NO se encunetra en BD'.format(nombre_cliente))
 	
 	else:
 		print('Comando invalido')
