@@ -120,7 +120,6 @@ if __name__ == '__main__':
 		cliente =_get_cliente_from_user()
 
 		crear_cliente(cliente)
-		lista_clientes()
 	
 	elif comando == 'L':
 		lista_clientes()
@@ -130,13 +129,11 @@ if __name__ == '__main__':
 		actualizar_cliente = _get_cliente_from_user()
 
 		actualizar_cliente(cliente_id, actualizar_cliente)
-		lista_clientes()
 
 	elif comando == 'E':
 		cliente_id = int(_get_nombre_cliente_field('id'))
 
 		borrar_cliente(cliente_id)
-		lista_clientes()
 
 	elif comando == 'B':
 		nombre_cliente = _get_nombre_cliente_field('nombre')
