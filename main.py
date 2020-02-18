@@ -19,7 +19,7 @@ def _inicializar_clientes_desde_almaceanemiento():
 def _guardar_clientes_en_archivo():
 	tmp_tabla_nombre = '{}.tmp'.format(TABLA_CLIENTE)
 	with open(tmp_tabla_nombre, mode='w') as f:
-		writer = csv,DictWriter(f, fieldnames=ESQUEMA_CLIENTE)
+		writer = csv.DictWriter(f, fieldnames=ESQUEMA_CLIENTE)
 		writer.writerows(clientes)
 
 		os.remove(TABLA_CLIENTE)
