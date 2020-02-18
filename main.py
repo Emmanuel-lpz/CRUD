@@ -1,21 +1,29 @@
 import sys
+import csv
+import os
 
 
-clientes = [
-{
-	'nombre': 'Pablo',
-	'company': 'Google',
-	'email': 'pablo@google.com',
-	'posicion': 'Sofware Engineer',
-},
+TABLA_CLIENTE = '.clientes.csv'
+ESQUEMA_CLIENTE = ['nombre', 'company', 'email', 'posicion']
+clientes = []
 
-{
-	'nombre': 'Ricardo',
-	'company': 'Facebook',
-	'email': 'rochard@google.com',
-	'posicion': 'Sr. Sofware Engineer',
-}
-]
+
+def _inicializar_clientes_desde_almaceanemiento():
+	with open(TABLA_CLIENTE, mode='r') as f:
+		reader = csv.DictReader(f, fieldnames=ESQUEMA_CLIENTE)
+
+		for row in reader:
+			clientes.append(row)
+
+
+def _guardar_clientes_en_archivo():
+	tmp_tabla_nombre = '{}.tmp'.format(TABLA_CLIENTE)
+	with open(tmp_tabla_nombre, mode='w') as f:
+		writer = csv,DictWriter(f, fieldnames=ESQUEMA_CLIENTE)
+		writer.writerows(clientes)
+
+		os.remove(TABLA_CLIENTE)
+		os.rename(tmp_tabla_nombre, TABLA_CLIENTE)
 
 
 def crear_cliente(nombre_cliente):
@@ -101,6 +109,8 @@ def _print_welcome():
 
 
 if __name__ == '__main__':
+	_inicializar_clientes_desde_almaceanemiento()
+
 	_print_welcome()
 
 	comando = input()
@@ -139,4 +149,7 @@ if __name__ == '__main__':
 	
 	else:
 		print('Comando invalido')
+
+
+	_guardar_clientes_en_archivo()
 	
